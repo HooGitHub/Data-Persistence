@@ -24,15 +24,15 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //DataPersistence.Instance.LoadData();
-        //if(DataPersistence.Instance.maxPlayerScore == 0)
-        //{
-        //    MaxScoreText.text = "";
-        //}
-        //else
-        //{
-        //    MaxScoreText.text = $"Best score : {DataPersistence.Instance.maxPlayerName} : {DataPersistence.Instance.maxPlayerScore}";
-        //}
+        DataPersistence.Instance.LoadData();
+        if (DataPersistence.Instance.maxPlayerScore == 0)
+        {
+            MaxScoreText.text = "";
+        }
+        else
+        {
+            MaxScoreText.text = $"Best score : {DataPersistence.Instance.maxPlayerName} : {DataPersistence.Instance.maxPlayerScore}";
+        }
 
 
         m_PlayerName = DataPersistence.Instance.playerName;
@@ -73,6 +73,12 @@ public class MainManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                if(m_Points > DataPersistence.Instance.maxPlayerScore)
+                {
+                    DataPersistence.Instance.maxPlayerScore = m_Points;
+                    DataPersistence.Instance.maxPlayerName = DataPersistence.Instance.playerName;
+                    DataPersistence.Instance.SaveData();
+                }
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
